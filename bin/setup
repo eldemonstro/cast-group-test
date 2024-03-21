@@ -25,4 +25,9 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   system! "bin/rails restart"
+
+  unless File.exists?(".env")
+    puts "\n== Copying .env.sample =="
+    system! "cp .env.sample .env"
+  end
 end

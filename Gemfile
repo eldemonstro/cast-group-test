@@ -29,6 +29,10 @@ gem "jbuilder"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+group :development, :test do
+  gem 'dotenv'
+end
+
 group :development do
   gem "pry"
 end

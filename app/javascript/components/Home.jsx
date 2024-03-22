@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate()
+  const location = useLocation()
+
   const [secondsLeft, setSecondsLeft] = useState()
+  const [username, setUsername] = useState('')
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -19,7 +22,9 @@ export default function Home() {
     fetchSession().then((session) => {
       if(!session) navigate('/login')
 
-      setSecondsLeft(session.seconds_remaining)})
+      setSecondsLeft(session.seconds_remaining)
+      setUsername(session.username)
+    })
   }, [])
 
   useEffect(() => {
@@ -38,7 +43,7 @@ export default function Home() {
       }
     }).then((data) => {
       if (data.ok) {
-        return navigate('/login')
+        return navigate('/login', { state: { message: 'Deslogado com sucesso' } })
       }
     })
   }
@@ -46,7 +51,8 @@ export default function Home() {
   return(
     <div className="container col-6 mx-auto d-flex align-items-center h-100">
       <div className="align-items-center d-flex flex-column mx-auto">
-        <h1>Home</h1>
+        <h1>Olá {username}</h1>
+        { location.state && <span>{location.state.message}</span>  }
         <span>Tempo restante na sessão: <br /> { secondsLeft > 0 ? secondsLeft + " segundos" : "Tempo de sessão encerrada!" }</span>
         <button onClick={ handleLogout } className="btn btn-primary mt-2">Logout</button>
       </div>

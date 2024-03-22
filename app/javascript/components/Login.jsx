@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Form from './login/Form'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [errors, setErrors] = useState({})
-
   const navigate = useNavigate()
+  const location = useLocation()
+  
+  const [errors, setErrors] = useState({})
 
   const handleLogin = async (event) => {
     const token = document.querySelector('meta[name="csrf-token"]').content
@@ -25,7 +26,7 @@ export default function Login() {
       body: JSON.stringify(loginData)
     }).then((data) => {
       if (data.ok) {
-        return navigate('/')
+        return navigate('/', { state: { message: 'Logado com sucesso!' } })
       }
 
       return Promise.reject(data)
@@ -41,6 +42,7 @@ export default function Login() {
     <div className="container col-4 mx-auto d-flex align-items-center h-100">
       <div className="align-items-center d-flex flex-column">
         <h1>Login</h1>
+        { location.state && <span>{location.state.message}</span> }
         <Form handleLogin={ handleLogin } errors={ errors } />
       </div>
     </div>

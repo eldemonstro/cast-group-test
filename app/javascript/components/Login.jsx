@@ -38,9 +38,11 @@ export default function Login() {
 
 
   return(
-    <>
-      <h1>Login</h1>
-      <Form handleLogin={ handleLogin } errors={ errors } />
-    </>
+    <div className="container col-4 mx-auto d-flex align-items-center h-100">
+      <div className="align-items-center d-flex flex-column">
+        <h1>Login</h1>
+        <Form handleLogin={ handleLogin } errors={ errors } />
+      </div>
+    </div>
   )
 };

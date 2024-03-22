@@ -26,5 +26,9 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1"
+  }
 }

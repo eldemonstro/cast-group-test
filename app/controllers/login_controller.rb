@@ -1,20 +1,24 @@
+# frozen_string_literal: true
+
 class LoginController < ApplicationController
   def index; end
 
   def create
-    if is_valid_user?
-      session[:username] = login_params[:username]
-      session[:expires_at] = 60.seconds.from_now
-      
-      render json: { logged: 'logged_in' }, status: :created
-    else
-      render json: { errors: 'bad_login' }, status: 401
-    end
+    authenticate!
+
+    session[:username] = login_params[:username]
+    session[:expires_at] = 60.seconds.from_now
+
+    render json: { logged: 'logged_in' }, status: :created
+  rescue UserAuthenticator::NotAuthorized => e
+    render json: { errors: e.message }, status: :unauthorized
   end
 
   def logout
     session.delete(:username)
     session.delete(:expires_at)
+
+    render status: :no_content
   end
 
   private
@@ -23,7 +27,7 @@ class LoginController < ApplicationController
     @login_params ||= params.permit(:username, :password)
   end
 
-  def is_valid_user?
-    UserValidator.is_valid_user?(login_params)
+  def authenticate!
+    UserAuthenticator.authenticate!(login_params)
   end
 end

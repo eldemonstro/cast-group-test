@@ -1,24 +1,23 @@
-# README
+# Cast Group Test
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Running the application
 
-Things you may want to cover:
+### Requirements
 
-* Ruby version
+- Ruby >=3
+- NodeJS >=v10
+- yarn >=1.22
 
-* System dependencies
+### Setup
 
-* Configuration
+```
+bin/setup
+```
 
-* Database creation
+### Running the server
 
-* Database initialization
+```
+bin/dev
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The server will be available on `localhost:3000`
